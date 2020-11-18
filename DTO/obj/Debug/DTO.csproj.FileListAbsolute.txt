@@ -1,0 +1,15 @@
+C:\Users\Оля\source\repos\TradingCompany\DTO\bin\Debug\DTO.dll
+C:\Users\Оля\source\repos\TradingCompany\DTO\bin\Debug\DTO.pdb
+C:\Users\Оля\source\repos\TradingCompany\DTO\obj\Debug\DTO.csprojAssemblyReference.cache
+C:\Users\Оля\source\repos\TradingCompany\DTO\obj\Debug\DTO.csproj.CoreCompileInputs.cache
+C:\Users\Оля\source\repos\TradingCompany\DTO\obj\Debug\DTO.dll
+C:\Users\Оля\source\repos\TradingCompany\DTO\obj\Debug\DTO.pdb
+C:\Users\Оля\source\repos\TradingCompany\DTO\bin\Debug\AutoMapper.dll
+C:\Users\Оля\source\repos\TradingCompany\DTO\bin\Debug\AutoMapper.xml
+C:\Users\Оля\source\repos\TradingCompany\DTO\obj\Debug\DTO.csproj.CopyComplete
+C:\Users\Olha\source\repos\TradingCompany\DTO\bin\Debug\DTO.dll
+C:\Users\Olha\source\repos\TradingCompany\DTO\bin\Debug\DTO.pdb
+C:\Users\Olha\source\repos\TradingCompany\DTO\obj\Debug\DTO.csprojAssemblyReference.cache
+C:\Users\Olha\source\repos\TradingCompany\DTO\obj\Debug\DTO.csproj.CoreCompileInputs.cache
+C:\Users\Olha\source\repos\TradingCompany\DTO\obj\Debug\DTO.dll
+C:\Users\Olha\source\repos\TradingCompany\DTO\obj\Debug\DTO.pdb

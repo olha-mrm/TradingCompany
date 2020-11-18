@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TradingCompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DeliveryStatu">
+    <Key>
+      <PropertyRef Name="DeliveryStatusID" />
+    </Key>
+    <Property Name="DeliveryStatusID" Type="Int16" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_DeliveryStatus" FromRole="DeliveryStatus" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="ItemID" />
+    </Key>
+    <Property Name="ItemID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="av_amount" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="OrdersRefs" Relationship="Self.FK_OrdersRef_Items" FromRole="Items" ToRole="OrdersRef" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="MainOrderID" />
+    </Key>
+    <Property Name="MainOrderID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CustomerID" Type="Int64" Nullable="false" />
+    <Property Name="StatusID" Type="Int16" Nullable="false" />
+    <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastUpdate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="LastStaffUpdated" Type="Int64" />
+    <NavigationProperty Name="DeliveryStatu" Relationship="Self.FK_Orders_DeliveryStatus" FromRole="Orders" ToRole="DeliveryStatus" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Orders_Users" FromRole="Orders" ToRole="Users" />
+    <NavigationProperty Name="OrdersRefs" Relationship="Self.FK_OrdersRef_Orders" FromRole="Orders" ToRole="OrdersRef" />
+  </EntityType>
+  <EntityType Name="OrdersRef">
+    <Key>
+      <PropertyRef Name="refOrderID" />
+      <PropertyRef Name="refItemID" />
+    </Key>
+    <Property Name="refOrderID" Type="Int64" Nullable="false" />
+    <Property Name="refItemID" Type="Int64" Nullable="false" />
+    <Property Name="amount" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Item" Relationship="Self.FK_OrdersRef_Items" FromRole="OrdersRef" ToRole="Items" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_OrdersRef_Orders" FromRole="OrdersRef" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="Binary" MaxLength="20" FixedLength="true" Nullable="false" />
+    <Property Name="Position" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="AccessLevel" Type="Int32" />
+    <Property Name="Username" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Salt" Type="String" MaxLength="25" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Users" FromRole="Users" ToRole="Orders" />
+  </EntityType>
+  <Association Name="FK_Orders_DeliveryStatus">
+    <End Role="DeliveryStatus" Type="Self.DeliveryStatu" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryStatus">
+        <PropertyRef Name="DeliveryStatusID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrdersRef_Items">
+    <End Role="Items" Type="Self.Item" Multiplicity="1" />
+    <End Role="OrdersRef" Type="Self.OrdersRef" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="OrdersRef">
+        <PropertyRef Name="refItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrdersRef_Orders">
+    <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrdersRef" Type="Self.OrdersRef" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="MainOrderID" />
+      </Principal>
+      <Dependent Role="OrdersRef">
+        <PropertyRef Name="refOrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TradingCompanyEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DeliveryStatus" EntityType="Self.DeliveryStatu" />
+    <EntitySet Name="Items" EntityType="Self.Item" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="OrdersRefs" EntityType="Self.OrdersRef" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Orders_DeliveryStatus" Association="Self.FK_Orders_DeliveryStatus">
+      <End Role="DeliveryStatus" EntitySet="DeliveryStatus" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrdersRef_Items" Association="Self.FK_OrdersRef_Items">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="OrdersRef" EntitySet="OrdersRefs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrdersRef_Orders" Association="Self.FK_OrdersRef_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrdersRef" EntitySet="OrdersRefs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
