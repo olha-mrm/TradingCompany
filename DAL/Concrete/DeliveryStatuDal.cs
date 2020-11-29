@@ -59,5 +59,56 @@ namespace DAL.Concrete
             }
 
         }
+
+        public DeliveryStatuDTO GetDelStatusById(short id)
+        {
+            using (SqlConnection conn = new SqlConnection(this.connectionString))
+            using (SqlCommand comm = conn.CreateCommand())
+            {
+                conn.Open();
+                DeliveryStatuDTO delStatus = new DeliveryStatuDTO();
+                comm.CommandText = $"SELECT * from DeliveryStatus WHERE DeliveryStatusID = {id}";
+                SqlDataReader reader = comm.ExecuteReader();
+                while (reader.Read())
+                {
+                    delStatus = new DeliveryStatuDTO
+                    {
+                        DeliveryStatusID = (short)reader["DeliveryStatusID"],
+                        Status = reader["Status"].ToString()
+                    };
+                }
+                return delStatus;
+            }
+        }
+
+        public DeliveryStatuDTO CreateDeliveryStatus(DeliveryStatuDTO delStatus)
+        {
+            using (SqlConnection conn = new SqlConnection(this.connectionString))
+            using (SqlCommand comm = conn.CreateCommand())
+            {
+                comm.CommandText = "INSERT into DeliveryStatus (Status) output INSERTED.DeliveryStatusID values (@status)";
+                comm.Parameters.Clear();
+
+                comm.Parameters.AddWithValue("@status", delStatus.Status);
+
+                conn.Open();
+                delStatus.DeliveryStatusID = Convert.ToInt16(comm.ExecuteScalar());
+                return delStatus;
+            }
+        }
+
+        public void DeleteDelStatus(short id)
+        {
+            using (SqlConnection conn = new SqlConnection(this.connectionString))
+            using (SqlCommand comm = conn.CreateCommand())
+            {
+                comm.CommandText = "DELETE from DeliveryStatus WHERE DeliveryStatusID = @id";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("@id", id);
+                conn.Open();
+
+                comm.ExecuteNonQuery();
+            }
+        }
     }
 }

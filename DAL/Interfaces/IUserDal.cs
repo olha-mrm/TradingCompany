@@ -12,6 +12,7 @@ namespace DAL.Interfaces
         UserDTO GetUserById(long id);
         UserDTO CreateUser(UserDTO user);
         List<UserDTO> GetAllUsers();
-
+        void DeleteUser(long id);
+        UserDTO UpdateUser(UserDTO user);
     }
 }

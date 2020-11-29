@@ -3,6 +3,7 @@ using DAL.Interfaces;
 using DTO;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +45,28 @@ namespace DALEF.Concrete
                 entities.Users.Add(u);
                 entities.SaveChanges();
                 return _mapper.Map<UserDTO>(u);
+            }
+        }
+
+        public void DeleteUser(long id)
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                var u = entities.Users.SingleOrDefault(us => us.UserID == id);
+                if (u == null) { return; }
+                entities.Users.Remove(u);
+                entities.SaveChanges();
+            }
+        }
+
+        public UserDTO UpdateUser(UserDTO user)
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                entities.Users.AddOrUpdate(_mapper.Map<User>(user));
+                var _user = entities.Users.Single(u => u.UserID == user.UserID);
+                entities.SaveChanges();
+                return _mapper.Map<UserDTO>(_user);
             }
         }
     }

@@ -9,9 +9,11 @@ namespace DAL.Interfaces
 {
     public interface IOrderDal
     {
-        List<OrderDTO> GetAllOrders();
+        OrderDTO CreateOrder(OrderDTO order);
+        OrderDTO UpdateOrder(OrderDTO order);
         OrderDTO GetOrderByID(long orderID);
-
+        List<OrderDTO> GetAllOrders();
+        List<OrderDTO> GetOrdersByUserId(long customerID);
         // TO DO !!!
         //OrderDTO SetOrderStatus(OrderDTO order, short new_status);
     }

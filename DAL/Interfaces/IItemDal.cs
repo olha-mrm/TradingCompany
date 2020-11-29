@@ -10,6 +10,10 @@ namespace DAL.Interfaces
     public interface IItemDal
     {
         string GetNameByID(long id);
-        ItemDTO GetItemById(long id);
+        ItemDTO GetItemById(long id);//
+        List<ItemDTO> GetAllItems();
+        ItemDTO UpdateItem(ItemDTO item);
+        ItemDTO CreateItem(ItemDTO item);
+        void DeleteItem(long id);
     }
 }

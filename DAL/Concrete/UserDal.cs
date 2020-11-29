@@ -90,5 +90,40 @@ namespace DAL.Concrete
                 return user;
             }
         }
+
+        public void DeleteUser(long id)
+        {
+            using (SqlConnection conn = new SqlConnection(this.connectionString))
+            using (SqlCommand comm = conn.CreateCommand())
+            {
+                comm.CommandText = "DELETE from Users WHERE UserID = @id";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("@id", id);
+                conn.Open();
+                comm.ExecuteNonQuery();
+            }
+        }
+
+        public UserDTO UpdateUser(UserDTO user)
+        {
+            using (SqlConnection conn = new SqlConnection(this.connectionString))
+            using (SqlCommand comm = conn.CreateCommand())
+            {
+                comm.CommandText = "UPDATE Users set FullName = @fullName, Password = @password, Position = @position, AccessLevel = @accessLevel, Username = @username, Salt = @salt";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("@fullName", user.FullName);
+                comm.Parameters.AddWithValue("@password", user.Password);
+                comm.Parameters.AddWithValue("@position", user.Position);
+                comm.Parameters.AddWithValue("@accessLevel", user.AccessLevel);
+                comm.Parameters.AddWithValue("@username", user.Username);
+                comm.Parameters.AddWithValue("@salt", user.Salt);
+
+                conn.Open();
+                user.UserID = Convert.ToInt64(comm.ExecuteScalar());
+                return user;
+            }
+
+        }
+
     }
 }

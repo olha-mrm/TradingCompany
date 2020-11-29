@@ -33,5 +33,37 @@ namespace DALEF.Concrete
                 return _mapper.Map<string>(status.Status);
             }
         }
+
+        public DeliveryStatuDTO GetDelStatusById(short id)
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                var delStatus = entities.DeliveryStatus.SingleOrDefault(ds => ds.DeliveryStatusID == id);
+                return _mapper.Map<DeliveryStatuDTO>(delStatus);
+            }
+        }
+
+        public DeliveryStatuDTO CreateDeliveryStatus(DeliveryStatuDTO delStatus)
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                DeliveryStatu ds = _mapper.Map<DeliveryStatu>(delStatus);
+                entities.DeliveryStatus.Add(ds);
+                entities.SaveChanges();
+                return _mapper.Map<DeliveryStatuDTO>(ds);
+            }
+        }
+
+        public void DeleteDelStatus(short id)
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                var ds = entities.DeliveryStatus.SingleOrDefault(_ds => _ds.DeliveryStatusID == id);
+                if (ds == null) 
+                    return;
+                entities.DeliveryStatus.Remove(ds);
+                entities.SaveChanges();
+            }
+        }
     }
 }
