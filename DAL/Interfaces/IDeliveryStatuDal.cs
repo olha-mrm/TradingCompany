@@ -13,6 +13,7 @@ namespace DAL.Interfaces
         List<DeliveryStatuDTO> GetAllStatuses(); 
         DeliveryStatuDTO GetDelStatusById(short id); 
         DeliveryStatuDTO CreateDeliveryStatus(DeliveryStatuDTO delStatus);
+        DeliveryStatuDTO UpdateDeliveryStatus(DeliveryStatuDTO delStatus);
         void DeleteDelStatus(short id);
     }
 }

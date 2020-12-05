@@ -4,6 +4,7 @@ using DTO;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,8 +43,26 @@ namespace DALEF.Concrete
             using (var entities = new TradingCompanyEntities())
             {
                 User u = _mapper.Map<User>(user);
-                entities.Users.Add(u);
-                entities.SaveChanges();
+                
+                //entities.SaveChanges();
+                //Console.WriteLine(v);
+                try
+                {
+                    // Your code...
+                    // Could also be before try if you know the exception occurs in SaveChanges
+                    entities.Users.Add(u);
+                    entities.SaveChanges();
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        }
+                    }
+                }
                 return _mapper.Map<UserDTO>(u);
             }
         }

@@ -110,5 +110,19 @@ namespace DAL.Concrete
                 comm.ExecuteNonQuery();
             }
         }
+        public DeliveryStatuDTO UpdateDeliveryStatus(DeliveryStatuDTO delStatus)
+        {
+            using (SqlConnection conn = new SqlConnection(this.connectionString))
+            using (SqlCommand comm = conn.CreateCommand())
+            {
+                comm.CommandText = "UPDATE DeliveryStatus set Status = @status";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("@status", delStatus.Status);
+                conn.Open();
+
+                delStatus.DeliveryStatusID = Convert.ToInt16(comm.ExecuteScalar());
+                return delStatus;
+            }
+        }
     }
 }

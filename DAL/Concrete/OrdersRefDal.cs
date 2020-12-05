@@ -40,9 +40,7 @@ namespace DAL.Concrete
                 }
                 return ordersRef;
             }
-
         }
-
         public List<OrdersRefDTO> GetOrdersByItem(long itemID)
         {
             using (SqlConnection conn = new SqlConnection(this.connectionString))
@@ -64,6 +62,50 @@ namespace DAL.Concrete
 
                 }
                 return ordersRef;
+            }
+        }
+        public OrdersRefDTO CreateOrderRef(OrdersRefDTO orderRef)
+        {
+            using (SqlConnection conn = new SqlConnection(this.connectionString))
+            using (SqlCommand comm = conn.CreateCommand())
+            {
+                comm.CommandText = "INSERT into OrdersRef (refOrderID, refItemID, amount) values (@refOrderID, @refItemID, @amount)";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("@refOrderID", orderRef.refOrderID);
+                comm.Parameters.AddWithValue("@refItemID", orderRef.refItemID);
+                comm.Parameters.AddWithValue("@amount", orderRef.amount);
+
+                conn.Open();
+                return orderRef;
+            }
+        }
+        public OrdersRefDTO UpdateOrderRef(OrdersRefDTO orderRef)
+        {
+            using (SqlConnection conn = new SqlConnection(this.connectionString))
+            using (SqlCommand comm = conn.CreateCommand())
+            {
+                comm.CommandText = "UPDATE OrdersRef set amount = @amount";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("@amount", orderRef.amount);
+                conn.Open();
+                //
+                orderRef.refOrderID = Convert.ToInt64(comm.ExecuteScalar());
+                return orderRef;
+            }
+        }
+
+        public void DeleteOrderRef(long orderID, long itemID)
+        {
+            using (SqlConnection conn = new SqlConnection(this.connectionString))
+            using (SqlCommand comm = conn.CreateCommand())
+            {
+                comm.CommandText = "DELETE from OrdersRef WHERE refOrderID = @orderID and refItemID = @itemID";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("@orderID", orderID);
+                comm.Parameters.AddWithValue("@itemID", itemID);
+                conn.Open();
+
+                comm.ExecuteNonQuery();
             }
         }
     }

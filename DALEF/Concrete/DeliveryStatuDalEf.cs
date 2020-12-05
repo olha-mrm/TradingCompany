@@ -3,6 +3,7 @@ using DAL.Interfaces;
 using DTO;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,6 +64,17 @@ namespace DALEF.Concrete
                     return;
                 entities.DeliveryStatus.Remove(ds);
                 entities.SaveChanges();
+            }
+        }
+
+        public DeliveryStatuDTO UpdateDeliveryStatus(DeliveryStatuDTO delStatus)
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                entities.DeliveryStatus.AddOrUpdate(_mapper.Map<DeliveryStatu>(delStatus));
+                var dstatus = entities.DeliveryStatus.Single(ds => ds.DeliveryStatusID == delStatus.DeliveryStatusID);
+                entities.SaveChanges();
+                return _mapper.Map<DeliveryStatuDTO>(dstatus);
             }
         }
     }

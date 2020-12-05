@@ -76,14 +76,15 @@ namespace DAL.Concrete
             using (SqlConnection conn = new SqlConnection(this.connectionString))
             using (SqlCommand comm = conn.CreateCommand())
             {
-                comm.CommandText = "insert into Users (FullName, Password, Position, AccessLevel, Username, Salt)";
+                comm.CommandText = "insert into Users (FullName, Password, Position, AccessLevel, Username, Salt)" +
+                    "output INSERTED.UserID values (@fullName, @password, @position, @accessLevel, @username, @salt)";
                 comm.Parameters.Clear();
-                comm.Parameters.AddWithValue("@FullName", user.FullName);
-                comm.Parameters.AddWithValue("@Password", user.Password);
-                comm.Parameters.AddWithValue("@Position", user.Position);
-                comm.Parameters.AddWithValue("@AccessLevel", user.AccessLevel);
-                comm.Parameters.AddWithValue("@Username", user.Username);
-                comm.Parameters.AddWithValue("@Salt", user.Salt);
+                comm.Parameters.AddWithValue("@fullName", user.FullName);
+                comm.Parameters.AddWithValue("@password", user.Password);
+                comm.Parameters.AddWithValue("@position", user.Position);
+                comm.Parameters.AddWithValue("@accessLevel", user.AccessLevel);
+                comm.Parameters.AddWithValue("@username", user.Username);
+                comm.Parameters.AddWithValue("@salt", user.Salt);
 
                 conn.Open();
                 user.UserID = Convert.ToInt64(comm.ExecuteScalar());

@@ -4,12 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TradingCompanyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TradingCompanyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="DeliveryStatus">
           <Key>
             <PropertyRef Name="DeliveryStatusID" />
           </Key>
-          <Property Name="DeliveryStatusID" Type="smallint" Nullable="false" />
+          <Property Name="DeliveryStatusID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Status" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Items">
@@ -58,8 +58,8 @@
           </Key>
           <Property Name="UserID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Password" Type="binary" MaxLength="20" Nullable="false" />
-          <Property Name="Position" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Password" Type="binary" MaxLength="128" Nullable="false" />
+          <Property Name="Position" Type="nchar" MaxLength="15" Nullable="false" />
           <Property Name="AccessLevel" Type="int" />
           <Property Name="Username" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="Salt" Type="char" MaxLength="25" Nullable="false" />
@@ -136,8 +136,7 @@
             <End Role="OrdersRef" EntitySet="OrdersRef" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TradingCompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -201,8 +200,8 @@
           </Key>
           <Property Name="UserID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FullName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="Binary" MaxLength="20" FixedLength="true" Nullable="false" />
-          <Property Name="Position" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="Binary" MaxLength="128" FixedLength="true" Nullable="false" />
+          <Property Name="Position" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="AccessLevel" Type="Int32" />
           <Property Name="Username" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Salt" Type="String" MaxLength="25" FixedLength="true" Unicode="false" Nullable="false" />

@@ -14,7 +14,6 @@ namespace DAL.Interfaces
         OrderDTO GetOrderByID(long orderID);
         List<OrderDTO> GetAllOrders();
         List<OrderDTO> GetOrdersByUserId(long customerID);
-        // TO DO !!!
         //OrderDTO SetOrderStatus(OrderDTO order, short new_status);
     }
 }

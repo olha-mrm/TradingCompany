@@ -106,7 +106,7 @@ namespace DAL.Concrete
             using (SqlCommand comm = conn.CreateCommand())
             {
                 comm.CommandText = "INSERT into Items (Title, Price, av_amount) " +
-                    "output INSERTED.UserID values (@title, @price, @av_amount)";
+                    "output INSERTED.ItemID values (@title, @price, @av_amount)";
                 comm.Parameters.Clear();
                 comm.Parameters.AddWithValue("title", item.Title);
                 comm.Parameters.AddWithValue("price", item.Price);

@@ -1,11 +1,15 @@
-﻿using System;
+﻿using AutoMapper;
+using DTO;
+using DALEF.Concrete;
+using DAL.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DTO;
-//using DALEF.Concrete;
-using DAL.Concrete;
+using System.Data.SqlClient;
+using TradingCompany.Menu;
 
 namespace TradingCompany
 {
@@ -13,11 +17,8 @@ namespace TradingCompany
     {
         static void Main(string[] args)
         {
-            //string str = "password";
-            //OrderDal test = new OrderDal("metadata=res://*/CompanyModel.csdl|res://*/CompanyModel.ssdl|res://*/CompanyModel.msl;provider=System.Data.SqlClient;provider connection string=;");
-            //test.SetOrderStatus(9, 3);
-            Console.WriteLine("Hell yeah!");
-            Console.ReadLine();
+            MainMenu menu = new MainMenu();
+            menu.Start();
         }
     }
 }
