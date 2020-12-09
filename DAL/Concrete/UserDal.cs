@@ -126,5 +126,15 @@ namespace DAL.Concrete
 
         }
 
+
+
+        public bool Login(string username, string password)
+        {
+            throw new NotImplementedException();
+        }
+        public byte[] hash(string password, string salt)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -14,5 +14,9 @@ namespace DAL.Interfaces
         List<UserDTO> GetAllUsers();
         void DeleteUser(long id);
         UserDTO UpdateUser(UserDTO user);
+
+
+        bool Login(string username, string password);
+        byte[] hash(string password, string salt);
     }
 }

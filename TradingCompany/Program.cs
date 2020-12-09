@@ -19,6 +19,6 @@ namespace TradingCompany
         {
             MainMenu menu = new MainMenu();
             menu.Start();
-        }
+        }       
     }
 }

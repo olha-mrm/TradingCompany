@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{27ECDC42-49E8-4CFD-A0D3-C83BF5E07029}</ProjectGuid>
+    <ProjectGuid>{FA05F814-C761-47CD-BC27-34600A24071F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DAL</RootNamespace>
-    <AssemblyName>DAL</AssemblyName>
+    <RootNamespace>BusinessLogic</RootNamespace>
+    <AssemblyName>BusinessLogic</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,25 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Concrete\DeliveryStatuDal.cs" />
-    <Compile Include="Concrete\ItemDal.cs" />
-    <Compile Include="Concrete\OrderDal.cs" />
-    <Compile Include="Concrete\OrdersRefDal.cs" />
-    <Compile Include="Concrete\UserDal.cs" />
-    <Compile Include="Interfaces\IDeliveryStatuDal.cs" />
-    <Compile Include="Interfaces\IItemDal.cs" />
-    <Compile Include="Interfaces\IOrderDal.cs" />
-    <Compile Include="Interfaces\IOrdersRefDal.cs" />
-    <Compile Include="Interfaces\IUserDal.cs" />
+    <Compile Include="Concrete\AuthManager.cs" />
+    <Compile Include="Concrete\OrdersManager.cs" />
+    <Compile Include="Interfaces\IAuthManager.cs" />
+    <Compile Include="Interfaces\IOrdersManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\DALEF\DALEF.csproj">
+      <Project>{7401e15c-f587-42a8-8dbd-37224c7584fc}</Project>
+      <Name>DALEF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{27ecdc42-49e8-4cfd-a0d3-c83bf5e07029}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DTO\DTO.csproj">
       <Project>{4a5ec95c-228e-453a-b46f-b684af44f84b}</Project>
       <Name>DTO</Name>

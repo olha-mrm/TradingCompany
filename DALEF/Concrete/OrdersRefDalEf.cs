@@ -21,7 +21,7 @@ namespace DALEF.Concrete
 
         //?
 
-        public List<OrdersRefDTO> GetItemsInOrder(long orderID)
+        public List<OrdersRefDTO> GetItemsInOrder(long orderID) //returns all items in order by orderID
         {
             using (var entities = new TradingCompanyEntities()) 
             {

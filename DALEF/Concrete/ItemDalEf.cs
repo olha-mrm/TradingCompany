@@ -75,5 +75,14 @@ namespace DALEF.Concrete
                 entities.SaveChanges();
             }
         }
+
+        public ItemDTO GetItemByTitle(string title)
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                var item = entities.Items.SingleOrDefault(i => i.Title == title);
+                return _mapper.Map<ItemDTO>(item);
+            }
+        }
     }
 }

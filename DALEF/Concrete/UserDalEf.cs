@@ -8,7 +8,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Security.Cryptography;
 
 namespace DALEF.Concrete
 {
@@ -42,14 +42,10 @@ namespace DALEF.Concrete
         {
             using (var entities = new TradingCompanyEntities())
             {
-                User u = _mapper.Map<User>(user);
+                User u = _mapper.Map<User>(user);                
                 
-                //entities.SaveChanges();
-                //Console.WriteLine(v);
                 try
                 {
-                    // Your code...
-                    // Could also be before try if you know the exception occurs in SaveChanges
                     entities.Users.Add(u);
                     entities.SaveChanges();
                 }
@@ -86,6 +82,54 @@ namespace DALEF.Concrete
                 var _user = entities.Users.Single(u => u.UserID == user.UserID);
                 entities.SaveChanges();
                 return _mapper.Map<UserDTO>(_user);
+            }
+        }
+
+        public bool Login(string username, string password)
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                User user = entities.Users.SingleOrDefault(u => u.Username == username);
+                if (user is null)
+                {
+                    return false;
+                }
+                //
+                //1. Дістати пароль і сіль з бази
+                //2. введений пароль + сіль -> хешую
+                //3. порівняти отриманий хеш з хешом у базі 
+                
+                return user.Password.SequenceEqual(hash(password, user.Salt));
+            }
+        }
+        //private byte[] createHashedPassword(string inputString)//returns hashed password
+        //{
+        //    using (HashAlgorithm algorithm = SHA256.Create())
+        //        return algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
+        //}
+        public byte[] hash(string password, string salt)
+        {
+            var alg = SHA512.Create();
+            return alg.ComputeHash(Encoding.UTF8.GetBytes(password + salt));
+        }
+
+        public long GetUserId(string username)
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                var user = entities.Users.SingleOrDefault(u => u.Username == username);
+                if (user is null)
+                    return 0;
+
+                return user.UserID;
+            }
+        }
+        public int GetAccessLevel(string username)
+        {
+            using (var entities = new TradingCompanyEntities())
+            {
+                var user = entities.Users.SingleOrDefault(u => u.Username == username);
+                return user.AccessLevel != null ? user.AccessLevel.Value : 0;
             }
         }
     }

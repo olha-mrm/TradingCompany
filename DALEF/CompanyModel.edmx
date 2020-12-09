@@ -58,11 +58,11 @@
           </Key>
           <Property Name="UserID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Password" Type="binary" MaxLength="128" Nullable="false" />
+          <Property Name="Password" Type="binary" MaxLength="64" Nullable="false" />
           <Property Name="Position" Type="nchar" MaxLength="15" Nullable="false" />
           <Property Name="AccessLevel" Type="int" />
           <Property Name="Username" Type="nvarchar" MaxLength="15" Nullable="false" />
-          <Property Name="Salt" Type="char" MaxLength="25" Nullable="false" />
+          <Property Name="Salt" Type="char" MaxLength="12" Nullable="false" />
         </EntityType>
         <Association Name="FK_Orders_DeliveryStatus">
           <End Role="DeliveryStatus" Type="Self.DeliveryStatus" Multiplicity="1" />
@@ -200,11 +200,11 @@
           </Key>
           <Property Name="UserID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FullName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="Binary" MaxLength="128" FixedLength="true" Nullable="false" />
+          <Property Name="Password" Type="Binary" MaxLength="64" FixedLength="true" Nullable="false" />
           <Property Name="Position" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="AccessLevel" Type="Int32" />
           <Property Name="Username" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Salt" Type="String" MaxLength="25" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Salt" Type="String" MaxLength="12" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Users" FromRole="Users" ToRole="Orders" />
         </EntityType>
         <Association Name="FK_Orders_DeliveryStatus">

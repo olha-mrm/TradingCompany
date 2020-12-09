@@ -72,7 +72,7 @@ namespace TradingCompany.Menu
             string toHash = _inputtedPassword + _salt;
 
             byte[] _password = new byte [toHash.Length];
-            _password = createHashedPassword(toHash).ToArray(); //save it to database
+            _password = dal.hash(_inputtedPassword, _salt); //save it to database
             //Console.WriteLine(Convert.ToBase64String(_password));
 
             Console.WriteLine("Input Username: ");
@@ -98,22 +98,23 @@ namespace TradingCompany.Menu
         }
         
         private string generateSalt()
-        {
-            using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
-            {
-                byte[] tokenData = new byte[8];
-                rng.GetBytes(tokenData);
-
-                string token = Convert.ToBase64String(tokenData);
-                return token;
-            }
+        {           
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(Enumerable.Repeat(chars, 12)
+                  .Select(s => s[random.Next(s.Length)]).ToArray());
         }
-        private byte[] createHashedPassword(string inputString)//returns hashed password
-        {
-            using (HashAlgorithm algorithm = SHA256.Create())
-                return algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
-        }
+        //private byte[] createHashedPassword(string inputString)//returns hashed password
+        //{
+        //    using (HashAlgorithm algorithm = SHA256.Create())
+        //        return algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
+        //}
 
+        //private byte[] hash(string password, string salt)
+        //{
+        //    var alg = SHA512.Create();
+        //    return alg.ComputeHash(Encoding.UTF8.GetBytes(password + salt));
+        //}
         private void update()
         {
             Console.WriteLine("\n\t~*~ ~*~ ~*~ \tUpdating User\t ~*~ ~*~ ~*~\n");
@@ -150,9 +151,15 @@ namespace TradingCompany.Menu
                             Console.WriteLine("Input new Password: ");
                             string _inputtedPassword = Console.ReadLine();
                             string _salt = generateSalt();
-                            byte[] _password = createHashedPassword(_inputtedPassword + _salt);
-                            u.Password = _password;
+
+                            Console.WriteLine();
                             u.Salt = _salt;
+                            u.Password = new byte[64];                           
+
+                            u.Password = dal.hash (_inputtedPassword, _salt);                            
+                            
+                            //u = dal.UpdateUser(u);                           
+                            
                             break;
                         case 3:
                             Console.WriteLine("Input new Username: ");
