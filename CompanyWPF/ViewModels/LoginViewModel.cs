@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Interfaces;
 using System.ComponentModel;
+using DTO;
 
 namespace CompanyWPF.ViewModel
 {
@@ -46,6 +47,10 @@ namespace CompanyWPF.ViewModel
         public bool Login()
         {
             return _security.Login(Username, Password);
+        }
+        public UserDTO GerUser()
+        {
+            return _security.GetUserByUsername(Username);
         }
     }
 }

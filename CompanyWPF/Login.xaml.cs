@@ -1,4 +1,5 @@
 ﻿using System;
+using DTO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -54,6 +55,10 @@ namespace CompanyWPF
             {
                 ((dynamic)this.DataContext).Password = ((PasswordBox)sender).Password;
             }
+        }
+        public UserDTO GetUser()
+        {
+            return _loginViewModel.GerUser();
         }
     }
 }

@@ -47,7 +47,8 @@
 
             <StackPanel Grid.Row="1" >
                 <StackPanel Orientation="Horizontal">
-                    <TextBox FontFamily="Century Gothic"
+                    <TextBox Name="txtUsername"
+                        FontFamily="Century Gothic"
                            FontWeight="Light"
                            FontSize="20"
                            Foreground="Black" 

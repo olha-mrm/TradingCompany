@@ -3,6 +3,7 @@ using BusinessLogic.Concrete;
 using BusinessLogic.Interfaces;
 using DAL.Interfaces;
 using DALEF.Concrete;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -21,7 +22,7 @@ namespace CompanyWPF
     public partial class App : Application
     {
         public IUnityContainer Container;
-
+        public static UserDTO User_here;
         protected override void OnStartup(StartupEventArgs e)
         {
             Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
@@ -34,6 +35,12 @@ namespace CompanyWPF
             bool result = lf.ShowDialog() ?? false;
             if (result)
             {
+                User_here = lf.GetUser();
+                if (User_here.AccessLevel < 5)
+                {
+                    MessageBox.Show("You do not have access to this app!");
+                    Application.Current.Shutdown();
+                }
                 MainWindow ol = Container.Resolve<MainWindow>();
                 Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 Current.MainWindow = ol;
