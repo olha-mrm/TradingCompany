@@ -17,6 +17,7 @@
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ButtonTheme.xaml" />
+                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -85,7 +86,7 @@
                 FontFamily="Century Gothic"
                 Click="btn_byItem_Click"/>
         
-        <Label Content="Sort by:" HorizontalAlignment="Left" Margin="450,23,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,2.594" FontFamily="Century Gothic"/>
+        <Label Content="Get all orders sorted by:" HorizontalAlignment="Left" Margin="450,18,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,2.594" FontFamily="Century Gothic"/>
         
         <Button x:Name="DefaultSortButton" 
                 Content="Default" 
@@ -136,7 +137,11 @@
                   Height="314" Margin="10,96,0,0" 
                   VerticalAlignment="Top"
                   Width="774" 
+                  IsReadOnly="True"
+                  MouseDoubleClick="dataGrid_MouseDoubleClick"
                   ItemsSource="{Binding Source = {StaticResource OrderCollection}}">
+            <!--<EventSetter Event="MouseDoubleClick" Handler="RowDoubleClick"></EventSetter>-->
+
             <DataGrid.Columns>
 
             </DataGrid.Columns> 

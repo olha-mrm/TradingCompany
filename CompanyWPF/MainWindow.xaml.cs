@@ -70,5 +70,22 @@ namespace CompanyWPF
             var list = _orderManager.FindOrdersByItem(_orderManager.GetItemIdByIdTitle(txtB_byItem.Text));
             dataGrid.ItemsSource = _orderListView.ToMyOrderList(list);
         }
+
+        private void RowDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("You clicked!");
+        }
+
+        private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //var row = ItemsControl.ContainerFromElement((DataGrid)sender,
+            //                            e.OriginalSource as DependencyObject) as DataGridRow;
+
+            //if (row == null) return;
+            
+            
+            //Statuses w = new Statuses(_orderManager, i.ID, App.User_here);           
+               
+        }
     }
 }
